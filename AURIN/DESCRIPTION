@@ -1,0 +1,11 @@
+Package: IRISS
+Type: Package
+Title: IRISS WP3 GeoSocial solution - Toolbox
+Version: 1.0
+Author: AURIN
+Maintainer: Pascal Perez <pascal.perez@unimelb.edu.au>,German Gonzalez <german.gonzalez@unimelb.edu.au>, Masoud Rahimi <masoud.rahimi@unimelb.edu.au>
+Description: 
+License: GLP-3
+Encoding: UTF-8
+LazyData: true
+Imports: shiny,shinydashboard,shinyalert,stringi,shinythemes,shinycssloaders,shinyWidgets,shinyjs,shinyBS,shinyAce,markdown,rjson

@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+    shiny:
+        restart: always
+        build:
+            context: ./AURIN
+        ports:
+            - "4171:4171"
+        
+        network_mode: host
+            
+networks:
+  host:
+    name: host
+    external: true
