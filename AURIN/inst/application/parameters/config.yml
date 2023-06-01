@@ -1,0 +1,10 @@
+default:
+  aurin:
+    endpoint: 'https://adp.aurin.org.au/geoserver/wfs'
+    user_name: "user"
+    password: "pass"
+    version: "2.0.0"
+
+  dataverse:
+    endpoint: "dataverse.ada.edu.au"
+    token: "token" 
