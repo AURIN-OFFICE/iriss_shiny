@@ -1,0 +1,17 @@
+
+ Working Directory: /Users/gonzalezge/Desktop/Shiny/AURIN/inst/application
+ User Name: gonzalezgeR version 4.2.1 (2022-06-23)
+ Operating System: Darwin Kernel Version 21.6.0: Mon Aug 22 20:17:10 PDT 2022; root:xnu-8020.140.49~2/RELEASE_X86_64
+ Machine: m.local
+ Log Start Time: Tue Oct 11 16:42:12 2022
+[1] TRUE
+Quitting from lines 11-104 (report.Rmd) 
+Could not resolve host: adp.aurin.org.autrying URL 'https://user:pass@adp.aurin.org.au/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=datasource-AU_Govt_CER-UoM_AURIN_DB%3Acer_small_scale_instllns_swh_heat_pump_poa_2018&srsName=EPSG%3A4326'
+Quitting from lines 11-104 (report.Rmd) 
+cannot open URL 'https://user:pass@adp.aurin.org.au/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=datasource-AU_Govt_CER-UoM_AURIN_DB%3Acer_small_scale_instllns_swh_heat_pump_poa_2018&srsName=EPSG%3A4326'trying URL 'https://user:pass@adp.aurin.org.au/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=datasource-AU_Govt_CER-UoM_AURIN_DB%3Acer_small_scale_instllns_swh_heat_pump_poa_2001_jun_2021&srsName=EPSG%3A4326'
+Quitting from lines 11-104 (report.Rmd) 
+cannot open URL 'https://user:pass@adp.aurin.org.au/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=datasource-AU_Govt_CER-UoM_AURIN_DB%3Acer_small_scale_instllns_swh_heat_pump_poa_2001_jun_2021&srsName=EPSG%3A4326'trying URL 'https://user:pass@adp.aurin.org.au/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=datasource-AU_Govt_ABS-UoM_AURIN_DB_GeoLevel%3Apoa_2016_aust&srsName=EPSG%3A4326'
+Quitting from lines 11-104 (report.Rmd) 
+cannot open URL 'https://user:pass@adp.aurin.org.au/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=datasource-AU_Govt_ABS-UoM_AURIN_DB_GeoLevel%3Apoa_2016_aust&srsName=EPSG%3A4326'Quitting from lines 11-104 (report.Rmd) 
+Error: Cannot open "./data/POA_2016.gml"; The file doesn't seem to exist.
+Execution halted
