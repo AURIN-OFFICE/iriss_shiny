@@ -13,8 +13,8 @@ server = shinyServer(function(input, output, session) {
   #hideTab(inputId = "tabselected", target = "Home")
   
   
-  path <<-gsub(rstudioapi::getActiveDocumentContext()$path,pattern = "Shiny/.+",replacement = "")
-
+  #path <<-gsub(rstudioapi::getActiveDocumentContext()$path,pattern = "Shiny/.+",replacement = "")
+  #path 
   
   
   

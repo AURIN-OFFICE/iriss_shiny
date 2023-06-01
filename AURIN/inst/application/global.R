@@ -2,6 +2,7 @@ rm(list=ls())
 ################## --------------- Paquetes Shiny ------------- ##################
 if(!require("shiny")){install.packages("shiny");library(shiny)}else{library(shiny)}
 if(!require("shinydashboard")){install.packages("shinydashboard");library(shinydashboard)}else{library(shinydashboard)}
+if(!require("shinydashboardPlus")){install.packages("shinydashboardPlus");library(shinydashboardPlus)}else{library(shinydashboardPlus)}
 if(!require("shinyalert")){install.packages("shinyalert");library(shinyalert)}else{library(shinyalert)}
 if(!require("shinythemes")){install.packages("shinythemes");library(shinythemes)}else{library(shinythemes)}
 if(!require("shinycssloaders")){install.packages("shinycssloaders");library(stringi)}else{library(stringi)}
@@ -12,6 +13,7 @@ if(!require("shinyAce")){install.packages("shinyAce");library(shinyAce)}else{lib
 if(!require("shinyFiles")){install.packages("shinyFiles");library(shinyFiles)}else{library(shinyFiles)}
 if(!require("markdown")){install.packages("markdown");library(markdown)}else{library(markdown)}
 if(!require("rjson")){install.packages("rjson");library(rjson)}else{library(rjson)}
+if(!require("rmarkdown")){install.packages("rmarkdown");library(rmarkdown)}else{library(rmarkdown)}
 
 
 LSAY = readRDS('LSAY_metadata_shiny.RDS')
