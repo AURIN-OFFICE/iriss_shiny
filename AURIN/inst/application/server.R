@@ -55,7 +55,17 @@ server = shinyServer(function(input, output, session) {
     }
   )
   
-
+  
+  output$script <- downloadHandler(
+    filename =  "main.R",
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      file.copy("main.R", file, overwrite = TRUE)
+      
+    }
+  )
   
   
   output$config <- downloadHandler(
@@ -91,6 +101,11 @@ server = shinyServer(function(input, output, session) {
   
   
   ################################# ---------------- tabs ----------------  ##################################
+  observeEvent(input$start_home, {
+    updateTabsetPanel(session, "tabselected",
+                      selected = "resources")
+  })
+  
   observeEvent(input$start, {
     updatePickerInput(session,"longitudinal",selected = "")
     updatePickerInput(session,"long_waves",selected = "")
@@ -109,20 +124,44 @@ server = shinyServer(function(input, output, session) {
   })
   
   
-  output$Tab_home <- renderUI( tagList(HTML('<br><br><br><br>'),div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Resources</b> "))),HTML('<br><br><br>'),div(fluidRow( column(8,
+  output$Tab_home  = renderUI( tagList(HTML('<br>'),HTML("<p style='text-align:left;'><b>  <font size='6'>Welcome to the GeoSocial Service</font> </b></p>"),
+                                       boxg(color = '#96B243',id='subbox15',height= "380px",left='-1',right='-3',content=tagList(fluidRow(column(6,centerContent(tagList(fluidRow(HTML('<br>'),tags$img(src = "logn.png",height = 150, width = 350,align = "center")),
+                                                                                                                                                                        fluidRow(HTML('Longitudinal survey'))))),
+                                                                                                                                         column(6,div(style="font-size: 20px; color: white; font-family: Arial;",(tagList(fluidRow(tags$img(src = "intro.png",height = 250, width = 500,align = "center")),
+                                                                                                                                                          fluidRow(HTML('Geospatial data'))))))),HTML('<br>'),
+                                                                                                                                 div(style="font-size: 16px; padding-left: 5%; padding-right: 5%;padding-bottom: 10%;color: white; font-family: Arial;",HTML("<p style='text-align:center;'>The Geosocial solution allows researchers to augment Australia’s largest longitudinal surveys with geospatial statistical data derived from the Australian Census of Population and Housing. Geosocial will empower Australia's large cross-disciplinary social research community to identify patterns, make predictions, and inform social policy using rich integrated geosocial data.</p>")))
+                                            ),
+                                     div(boxg(color = '#45A0EF',id='subbox1s',height= "320px",left='-1',right='-3',
+                                              content=tagList(column(8,div(style="font-size: 16px; padding-top: 5%; color: white; font-family: Arial;",HTML("<p style='text-align:justify;'><b>How works?
+                                                                                                     </b> <br><br> Given the data's high confidence and the data custodians' restrictions,
+                                                                                                                                                             the Geosocial solution condensates multiple capabilities 
+                                                                                                                                                             and functions to the data linkage in a toolbox, 
+                                                                                                                                                             which with a configuration file and R script executed the data linkage.
+                                                                                                                                                             
+                                                                                                                                                             <br><br><b> Toolbox:</b> R library that has everything needed to the data linkage.
+                                                                                                                                                             <br><br><b> Parameters: </b>File with all information for data linkage, including data location, API credentials, wave and cohort info, etc.
+                                                                                                                                                             <br><br><b> Script: </b>Executed the workflow and used the toolbox to read and merge the data based on user preferences.</p>"))),
+                                                              column(3,div(style="font-size: 20px; padding-top: 5%; color: white; font-family: Arial;",tagList(fluidRow(tags$img(src = "tool.png",height = 200, width = 300,align = "center")),
+                                                                                                      fluidRow(HTML('GeoSocial'))))),
+                                                              column(1,div(style="font-size: 16px; padding-top: 250%; ", ButtonContent(buttonAction(outputId='start_home', label='Start',color = "#F5822B")))))))))
+  
+  
+  
+
+  output$resources <- renderUI( tagList(HTML('<br><br><br><br>'),div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Resources</b> "))),HTML('<br><br><br>'),div(fluidRow( column(8,
                         fluidRow(column(6,boxg(color = '#F5822B',id='subbox1',height= "400px",left='-1',right='-3',content=centerContent(tagList(fluidRow(column(12,HTML("TOOLBOX"))),
                             fluidRow(column(12,tags$img(src = "response.png",height = 150, width = 180,align = "center"))),HTML('<br><br>'),
                             fluidRow(column(12,buttonDownload(outputId = "toolbox",label = "Download",color = "#FDA563"))))))),
                         column(6,boxg(color = '#005BAA',id='subbox2',height= "400px",left='-3',right='-1',content=centerContent(tagList(fluidRow(column(12,HTML("DOCUMENTATION"))),
                             fluidRow(column(12,tags$img(src = "documentation.png",height = 150, width = 180,align = "center"))),HTML('<br><br>'),
                             fluidRow(column(12,buttonDownload(outputId = "manual",label = "Documentation",color = "#45A0EF")))))))),
-                        fluidRow(column(12,boxg(color = '#DBB639',id='subbox5',height= "400px",left='-1',right='-1',content=centerContent(tagList(fluidRow(column(12,HTML("TRAINING"))),
+                        fluidRow(column(12,boxg(color = '#DBB639',id='subbox5',height= "400px",left='-1',right='-1',content=centerContent(tagList(fluidRow(column(12,HTML("SCRIPT"))),
                             fluidRow(column(12,leftContent(tags$img(src = "personas.png",height = 150, width = 180,align = "center")))),HTML('<br><br>'),
-                            fluidRow(column(12,buttonAction(outputId='training', label='Learn how',color = "#E5C34F"))))))))),
+                            fluidRow(column(12,buttonDownload(outputId = "script",label = "Download",color = "#E5C34F"))))))))),
                         column(4,boxg(color = '#5C7E92',id='subbox3',height= "810px",left='-5',right='-1',content=centerContent(tagList(fluidRow(column(12,HTML("PARAMETERS"))),
                             fluidRow(column(12,tags$img(src = "search.png",height = 150, width = 180,align = "center"))),HTML('<br><br>'),
                             fluidRow(column(12,BulletsContent(HTML(markdown::renderMarkdown(text = "- Easy access to the data.\n- Certainty regarding data meanings. \n- Less room for analytic errors \n- Increased data usability and utility to untrained users.  \n"))))),
-                            fluidRow(column(12,ButtonContent(buttonAction(outputId='start', label='Start',color = "#759AAF"))))))))))))
+                            fluidRow(column(12,ButtonContent(buttonAction(outputId='start', label='Create',color = "#759AAF"))))))))))))
 
   
   observeEvent(input$cloud, {
@@ -445,7 +484,7 @@ server = shinyServer(function(input, output, session) {
   #                                                HTML('<br> '))))))))
   observeEvent(input$Back_parameters, {
     updateTabsetPanel(session, "tabselected",
-                      selected = "home")
+                      selected = "resources")
   })
   
   output$parameters <- renderUI(
