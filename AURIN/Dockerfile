@@ -1,12 +1,6 @@
-
-
-# FROM rocker/r-apt:bionic
-#FROM rocker/r-rmd
 FROM eddelbuettel/r2u:20.04
 
-# Set the locale
-
-
+# Some updates 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     libcurl4-gnutls-dev \
@@ -26,23 +20,17 @@ RUN apt-get update \
     perl
 
 
-#WORKDIR /AURIN/
-#COPY . .
-#RUN Rscript -e 'install.packages("shiny")'
+# Install Shiny 
 RUN Rscript -e 'install.packages("stringi")'
-#RUN install.r
-#EXPOSE 80
-
 RUN Rscript -e 'install.packages("shiny")'
-#CMD ["Rscript", "-e", "shiny::runApp('inst/application/', port = 80, host = '0.0.0.0')"]
 
+# Setup locales/english
 RUN apt-get install -y locales locales-all
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
 ## Install LaTeX
-## Source: https://registry.hub.docker.com/u/rocker/hadleyverse/dockerfile/
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
          ghostscript \
@@ -72,17 +60,11 @@ RUN mkdir -p /opt/pandoc \
   && ln -s "/opt/pandoc/pandoc-citeproc" /usr/local/bin \
   && rm -f /tmp/pandoc.zip
 
-## Install knitr and pander package
-
-
+## Setup environment
 WORKDIR /AURIN/
 COPY . .
-
-#RUN Rscript -e 'install.packages("shiny")'
-#RUN Rscript -e 'install.packages("stringi")'
-RUN install.r
 EXPOSE 80
 
-#CMD ["Rscript", "-e", 'install.packages("shiny")']
+## Start listening 
 CMD ["Rscript", "-e", "shiny::runApp('inst/application/', port = 80, host = '0.0.0.0')"]
 
