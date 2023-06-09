@@ -20,6 +20,21 @@ LSAY = readRDS('LSAY_metadata_shiny.RDS')
 TSP = read.csv('TSP_metadata_2021.csv')
 
 
+boxd <- function(color,id,height,left,right,content) {
+  content = fluidRow(div(style= paste0("
+      border-top: none;
+      border-radius: 10px;
+      border-left: 5px solid ",color,";
+      border-right: 5px solid ",color,";
+      margin-left: ",left,"%;
+      margin-right: ",right,"%;
+      padding: 0px 0px;
+      box-shadow: 0 1px 1px rgb(0 0 0 / 10%);overflow:hidden; 
+      background: ",color,";
+      width: 95%; "),div(style=paste0("overflow-y: scroll;  overflow-x: hidden;width: 110%;  height: ",height,";padding-right: 10%"),content)))
+}
+
+# 
 boxg <- function(color,id,height,left,right,content) {
   return(tagList( tags$style(
     HTML(
@@ -34,11 +49,12 @@ boxg <- function(color,id,height,left,right,content) {
       box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
       background: ",color,";
       height:",height,";
+
     }")
     )
   ),
   shinydashboardPlus::box(
-    id = id, width = 12, 
+    id = id, width = 12,
     content
   )) )
 }
@@ -47,7 +63,7 @@ boxg <- function(color,id,height,left,right,content) {
 
 
 centerContent = function(content){
-  return(div(style="font-size: 20px; padding-top: 10%; color: white; font-family: Arial;",content))
+  return(div(style="font-size: 20px; padding-top: 5%; color: white; font-family: Arial;",content))
   
 }
 
