@@ -11,20 +11,6 @@ server = shinyServer(function(input, output, session) {
   TSP_variables_choices = unique(TSP$variable)
   
 
-
-  # output$documentation <- downloadHandler(
-  #   filename =  "IRISS_1.0.pdf",
-  #   content = function(file) {
-  #     # Copy the report file to a temporary directory before processing it, in
-  #     # case we don't have write permissions to the current working dir (which
-  #     # can happen when deployed).
-  #     file.copy("IRISS_1.0.pdf", file, overwrite = TRUE)
-  #    
-  #   }
-  # )
-  
-  
-  
   output$toolbox <- downloadHandler(
     filename =  "Toolbox.tar.gz",
     content = function(file) {
@@ -164,17 +150,17 @@ server = shinyServer(function(input, output, session) {
 
   output$users  = renderUI(fluidRow(div(style='width: 100%; height: 1000px; overflow: hidden; position: relative;',
                                         tagList(HTML('<br>'),HTML("<p style='text-align:left;'><b>  <font size='6'>Welcome to the GeoSocial Service</font> </b></p>"),
-                                                fluidRow(column(6,boxd(color = '#96B243',id='s',height= "calc(60vh)",left='3',right='3',
+                                                fluidRow(column(6,boxd(color = '#96B243',id='s',height= "calc(70vh)",left='3',right='3',
                                                                        content=tagList(div(style="font-size: 20px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;",
                                                                                            HTML('<br>'),HTML("<p style='text-align:center;'><b>Guided data linkage</b></p>")),
-                                                                                       tags$img(src = "data.png",height = "25%", width = "23%",align = "center"),HTML('<br>'),HTML('<br>'),
+                                                                                       tags$img(src = "data.png",height = "110px%", width = "120px",align = "center"),HTML('<br>'),HTML('<br>'),
                                                                                        fluidRow(div(style="font-size: 18px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;", HTML("<p style='text-align:center;'>We have developed a pipeline that meets the needs of most users:"))),
                                                                                        fluidRow(column(12,BulletsContent(HTML(markdown::renderMarkdown(text = "- Easy access to the data.\n- Certainty regarding data meanings. \n- Less room for analytic errors \n- Increased data usability and utility to untrained users.  \n"))))),
                                                                                        ButtonContent(buttonAction(outputId='start_guided', label='Select',color = "#799d0d"))))),
-                                                         column(6,boxd(color = '#ed8333',id='s',height= "calc(60vh)",left='3',right='3',
+                                                         column(6,boxd(color = '#ed8333',id='s',height= "calc(70vh)",left='3',right='3',
                                                                        content=tagList(div(style="font-size: 20px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;",
                                                                                            HTML('<br>'),HTML("<p style='text-align:center;'><b>Advance linkage</b></p>")),
-                                                                                       tags$img(src = "coding.png",height = "25%", width = "25%",align = "center"),HTML('<br>'),HTML('<br>'),
+                                                                                       tags$img(src = "coding.png",height = "120px%", width = "120px%",align = "center"),HTML('<br>'),HTML('<br>'),
                                                                                        fluidRow(div(style="font-size: 18px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;", HTML("<p style='text-align:center;'>You have the ability to customize your own data pipeline and personalize the data linkage:"))),
                                                                                        fluidRow(column(12,BulletsContent(HTML(markdown::renderMarkdown(text = "- Confident with using Python and/or R for data wrangling, integration, and analysis.\n- Good understanding of geospatial data.\n- Adding new datasets. \n- Supports other social science researchers"))))),
                                                                                        ButtonContent(buttonAction(outputId='start_advance', label='Select',color = "#eb6601")))))),
@@ -186,26 +172,34 @@ server = shinyServer(function(input, output, session) {
   output$resources <- renderUI( tagList(HTML('<br><br><br>'),div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Resources</b> "))),HTML('<br><br><br>'),
                         div(fluidRow( column(12,
                         fluidRow(
-                        column(4,boxd(color = '#91ae3b',id='subbox1s',height= "40%",left='-1',right='-3',content=centerContent(tagList(fluidRow(column(12,HTML("TOOLBOX"),HTML('<br>'))),
+                        column(4,boxd(color = '#91ae3b',id='subbox1s',height= "calc(50vh)",left='-1',right='-3',content=centerContent(tagList(fluidRow(column(12,HTML("TOOLBOX"),HTML('<br>'))),
                             fluidRow(column(12,tags$img(src = "response.png",height = "30%", width = "30%",align = "center"))),HTML('<br><br>'),
-                            fluidRow(HTML('R library that has everything needed to the data linkage.')),HTML('<br><br>'),
-                            fluidRow(column(12,buttonDownload(outputId = "toolbox",label = "Download",color = "#70930a"))),
-                            HTML('<br><br>'),)))),
-                        column(4,boxd(color = '#005baa',id='subbox2s',height= "40%",left='-1',right='-3',content=centerContent(tagList(fluidRow(column(12,HTML("DOCUMENTATION"),HTML('<br>'))),
+                            fluidRow(div(style="padding-left: 8%;padding-right: 8%;font-family: Arial;",
+                                         HTML("<p style='text-align:center;'>R library with essential functions needed it to the data linkage. </p>"))),
+                            HTML('<br>'),
+                            div(style="padding-bottom: 50%;font-family: Arial;",fluidRow(column(12,buttonDownload(outputId = "toolbox",label = "Download",color = "#70930a")))),
+                            )))),
+                        column(4,boxd(color = '#005baa',id='subbox2s',height= "calc(50vh)",left='-1',right='-3',
+                                      content=centerContent(tagList(fluidRow(column(12,HTML("DOCUMENTATION"),HTML('<br>'))),
                                 fluidRow(column(12,tags$img(src = "doc.png",height = "30%", width = "30%",align = "center"))),HTML('<br><br>'),
-                                fluidRow(HTML('Each function of the library have a clear and concise description, usage, arguments, and output (value).')),HTML('<br>'),
+                                fluidRow(div(style="padding-left: 8%; padding-right: 8%;font-family: Arial;",
+                                             HTML("<p style='text-align:center;'>Each function has a description, usage, arguments, and output.</p>"))),
+                                HTML('<br>'),
                                 fluidRow(column(12,buttonDownload(outputId = "manual",label = "Documentation",color = "#023c6e"))),
-                                HTML('<br><br>'),)))),
-                        column(4,boxd(color = '#5c7e92',id='subbox3s',height= "40%",left='-1',right='-3',content=centerContent(tagList(fluidRow(column(12,HTML("PARAMETERS"),HTML('<br>'))),
-                                                                                                                                       fluidRow(column(12,tags$img(src = "search.png",height = "30%", width = "30%",align = "center"))),HTML('<br><br>'),
-                                                                                                                                       fluidRow(HTML('<br> File with all information for data linkage: data location, API credentials, wave and cohort info, etc.')),HTML('<br>'),
-                                                                                                                                       fluidRow(column(12,buttonDownload(outputId = "parameters_d",label = "Download",color = "#445d6c"))),
-                                                                                                                                       HTML('<br><br>'),))))),
-                        HTML('<br>')))),
+                                )))),
+                        column(4,boxd(color = '#5c7e92',id='subbox3s',height= "calc(50vh)",left='-1',right='-3',
+                                      content=centerContent(tagList(fluidRow(column(12,HTML("PARAMETERS"),HTML('<br>'))),
+                                fluidRow(column(12,tags$img(src = "search.png",height = "35%", width = "30%",align = "center"))),HTML('<br><br>'),
+                                fluidRow(div(style="padding-left: 8%;padding-top:4%;  padding-right: 8%;font-family: Arial;",
+                                             HTML("<p style='text-align:center;'>File with all information for data linkage: survey, cohort etc.</p>"))),
+                                HTML('<br>'),
+                                fluidRow(column(12,buttonDownload(outputId = "parameters_d",label = "Download",color = "#445d6c"))),
+                                )))))))),
                         fluidRow(column(12,boxg(color = '#e1b82e',id='subbox4s',height= "100%",left='-1',right='-1',
-                                                content=centerContent(tagList(fluidRow(column(12,HTML("SCRIPT"),HTML('<br>'))),
-                                                                                fluidRow(column(6,leftContent(tags$img(src = "personas.png",height = "30%", width = "30%",align = "center")))),HTML('<br><br>'),
-                                                                              fluidRow(HTML('An example of the workflow which used the toolbox to read and merge the data based on user preferences.')),
+                                                content=centerContent(tagList(fluidRow(column(12,HTML("SCRIPT"),HTML('<br>'))),HTML('<br>'),
+                                                                                fluidRow(column(3,leftContent(tags$img(src = "personas.png",height = "50%", width = "50%",align = "center"))),
+                                                                                         column(6,div(style="padding-left: 8%; padding-right: 8%;font-family: Arial;",
+                                                                                                      HTML("<p style='text-align:center;'>An example of the workflow which used the toolbox to read and merge the data based on user preferences.</p>")))),
                                                                               HTML('<br>'),fluidRow(column(12,buttonDownload(outputId = "script",label = "Download",color = "#ac8c21"))),
                                                                               HTML('<br><br>')))))),
                         HTML('<br><br>'),fluidRow(column(2,ButtonContent(buttonAction(outputId='Back_resources', label='Back',color = "#759AAF"))),column(6,''),column(2,''))))
@@ -275,22 +269,23 @@ server = shinyServer(function(input, output, session) {
   output$data <- renderUI(
     tagList(HTML('<br><br><br><br>'),renderUI(fluidPage(
       shinydashboard::box(width = 1000,height = 1000,status = "success",solidHeader = T,
-                          tagList(div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Where would you like your integrated data stored?</b> "))),HTML('<br><br><br>'),
+                          tagList(HTML("<p style='text-align:left;'><b>  <font size='6'>Where would you like your integrated data stored?</font> </b></p>"),HTML('<br>'),
                            HTML('The toolbox, allows the user to load the data linkage coming from the following sources:'),
-                           fluidRow(column(2,''),
-                           column(4,fluidPage(fluidRow(tags$h3('Australian Data Archive (ADA) API')),
+                           fluidRow(column(1,''),
+                           column(5,fluidPage(fluidRow(tags$h3('Australian Data Archive')),
                                               fluidRow(HTML('<br>')),
                                               fluidRow(tags$img(src = "cloud.png",height = 240, width = 240,align = "center")),
-                                              fluidRow(HTML('The longitudinal survey data is provided by ADA, a national service for collecting and preserving digital research data.')),
+                                              fluidRow(div(style="padding-left: 10%;padding-top:4%;  padding-right: 10%;font-family: Arial;",
+                                                           HTML("<p style='text-align:center;'>The survey is provided by ADA, a national service for collecting and preserving digital research data.</p>"))),
                                               fluidRow(HTML('<br>')),
-                                              fluidRow(buttonAction(outputId='cloud', width='400px',label='Cloud',color = "#E5C34F")))),
-                           column(4,fluidPage(fluidRow(tags$h3('Local environment')),
+                                              fluidRow(buttonAction(outputId='cloud', width='100px',label='Cloud',color = "#E5C34F")))),
+                           column(5,fluidPage(fluidRow(tags$h3('Local environment')),
                                               fluidRow(HTML('<br>')),
                                               fluidRow(tags$img(src = "local.png",height = 240, width = 240,align = "center")),
-                                              fluidRow(HTML('The user provides the longitudinal survey in the local environment where the toolbox is executed.')),
+                                              fluidRow(div(style="padding-left: 15%;padding-top:4%;  padding-right: 15%;font-family: Arial;",
+                                                           HTML("<p style='text-align:center;'>The user provides the survey in the local environment where the toolbox is executed.</p>"))),
                                               fluidRow(HTML('<br>')),
-                                              fluidRow(buttonAction(outputId='local', width='400px', label='Local',color = "#E5C34F")))),
-                           column(2,'')),
+                                              fluidRow(buttonAction(outputId='local', width='auto', label='Local',color = "#E5C34F"))))),
                            fluidRow(column(2,ButtonContent(buttonAction(outputId='Back_data', label='Back',color = "#759AAF"))),column(6,''),column(2,''))))))))
             
   
@@ -303,18 +298,19 @@ server = shinyServer(function(input, output, session) {
                           tagList(div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Where you would like you integrated data stored?</b> "))),HTML('<br><br><br>'),
                                   fluidRow(column(12,
                                                   renderUI(fluidPage(shinydashboard::box(title = HTML('<strong><font color="#759AAF">Australian Data Archive (ADA) API</font></strong>'),
-                                                                                            tagList(HTML('Before generating an API token to use the ADA API, it is necessary to obtain approval to access the LSAY 2009 data through ADA.'),tags$a(href="https://dataverse.ada.edu.au/loginpage.xhtml?redirectPage=dataverse.xhtml", "Click here for information.",style='text-decoration: underline;'),HTML('After getting the approval, you can create a token. Please refer to the image below to locate it.')),width = 1000,height = 1000,status = "success",solidHeader = T,
+                                                                                            tagList(HTML('Before generating an API token to use the ADA API, it is necessary to obtain approval to access the LSAY 2009 data through ADA.'),tags$a(target="_blank",href="https://dataverse.ada.edu.au/loginpage.xhtml?redirectPage=dataverse.xhtml", "Click here for information.",style='text-decoration: underline;'),HTML('After getting the approval, you can create a token. Please refer to the image below to locate it.')),width = 1000,height = 1000,status = "success",solidHeader = T,
                                                                                          HTML('<br><br>'),   
                                                                                          tagList(fluidRow(tags$img(src = "token.png",height = 200, width = 800,align = "center")),
                                                                                                  HTML('<br>'),  
-                                                                                            fluidRow(column(3,""),column(6,tagList(HTML('<br><strong><font color="#759AAF">Please copy and paste the ADA token into the designated field below:</font></strong>'),
+                                                                                            fluidRow(column(1,""),column(10,tagList(HTML('<br><strong><font color="#759AAF">Please copy and paste the ADA token into the designated field below:</font></strong>'),
                                                                                                                                    aceEditor(
                                                                                                                                      outputId = "token_ada",height = "50px",
                                                                                                                                      value = '',
                                                                                                                                      placeholder = "Please introduce your ADA token",debounce=0
                                                                                                                                    )),
                                                                                                                          HTML('<strong><font color="#E5C34F">We do not collect or upload any information. The token is included in the parameters file that you executed on your computer.</font></strong>'))
-                                                                                                     ,column(3,""),
+                                                                                                     ,column(1,""),
+                                                                                            fluidRow(column(6, HTML('<br>'))),
                                                                                             tagList(fluidRow(column(6,ButtonContent(buttonAction(outputId='back_ada', label='Back',color = "#759AAF"))),
                                                                                                              column(6,ButtonContent(buttonAction(outputId='continue_ada', label='Continue',color = "#759AAF"))))),
                                                                                             )))))))))))))
@@ -330,14 +326,15 @@ server = shinyServer(function(input, output, session) {
                                                                                          HTML('<br><br>'),   
                                                                                          tagList(fluidRow(tags$img(src = "folder.png",height = 150, width = 150,align = "center")),
                                                                                                  HTML('<br>'),   
-                                                                                                 fluidRow(column(3,""),column(6,tagList(
-                                                                                                   HTML('<strong><font color="#759AAF">Please indicates the folder where is located the LSAY 09 in Stata format:</font></strong><br><br>'),aceEditor(
-                                                                                                   outputId = "path_files",height = "50px",
-                                                                                                   value = '',,debounce=0,
-                                                                                                   placeholder = "Please introduce your absolute path. For example: C:\\Users\\example\\Documents\\LSA09"
+                                                                                                 fluidRow(column(1,""),column(10,tagList(
+                                                                                                   HTML('<strong><font color="#759AAF">Please indicates the folder where is located the LSAY 09 in Stata format:</font></strong><br><br>'),
+                                                                                                   aceEditor(
+                                                                                                     outputId = "path_files",height = "50px",
+                                                                                                     value = '',debounce=0,
+                                                                                                     placeholder = "Please introduce your absolute path. For example: C:\\Users\\example\\Documents\\LSA09"
                                                                                                  )),
                                                                                                  HTML('<strong><font color="#E5C34F">We do not collect or upload any information. The absolute path is included in the parameters file that you executed on your computer.</font></strong>')
-                                                                                                 ),column(3,""),
+                                                                                                 ),column(1,""),fluidRow(column(6, HTML('<br>'))), 
                                                                                                  tagList(fluidRow(column(6,ButtonContent(buttonAction(outputId='back_local', label='Back',color = "#759AAF"))),
                                                                                                                   column(6,ButtonContent(buttonAction(outputId='continue_local', label='Continue',color = "#759AAF"))))),
                                                                                                  )))))))))))))
@@ -423,21 +420,21 @@ server = shinyServer(function(input, output, session) {
       }
     } else if (!is.null(path_files)){
       if (path_files!=''){
-        withAPI = TRUE
-        token_ada = ""
-        
-      } else {
         withAPI = FALSE
-
+        path_files = gsub(x=path_files,pattern="\\\\",replacement = "/")
+        token_ada = ""
+      } else {
+        withAPI = TRUE
       }
     }
     
     
     # longitudinal_choices waves_choices long_topic_choices TSP_choices TSP_years_choices TSP_variables_choices
-    
+
 
     parameters = list()
-    parameters[['withAPI']] = withAPI
+    parameters[['with_API']] = withAPI
+
     
     dataverse = list()
     if (token_ada==""){
@@ -453,10 +450,11 @@ server = shinyServer(function(input, output, session) {
     }
 
     
-    parameters[['SurveyFiles']] = path_files 
+    parameters[['Survey_files']] = path_files 
     parameters[['LSAY_cohort']] = 2009
-    parameters[['TSP_year']] = TSP_years
-    parameters[['LSAY_waves']] = long_waves
+    parameters[['TSP_year']] = as.numeric(TSP_years)
+    parameters[['LSAY_waves']] = as.numeric(gsub(long_waves,pattern = "Wave.+-",replacement=""))
+    parameters[['LSAY_topics']] = long_topic
     parameters[['TSP_variables']] = TSP_variables
     
     myfile = toJSON(parameters)
@@ -480,14 +478,14 @@ server = shinyServer(function(input, output, session) {
   output$success <- renderUI(
     tagList(HTML('<br><br><br><br>'),renderUI(fluidPage(
       shinydashboard::box(width = 1000,height = 1000,status = "success",solidHeader = T,
-          tagList(div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Thank you, we have generated all the necessary for the data linkage</b> "))),HTML('<br><br><br><br>'),
+          tagList(HTML("<p style='text-align:left;'><b>  <font size='6'>Thank you, we have generated all the necessary for the data linkage</font> </b></p>"),HTML('<br><br>'),
           fluidRow(column(12,boxd(color = '#dde6cd',id='subbox5',height= "calc(50vh)",left='-1',right='-1',
           content=tagList(HTML('<br><br><br>'),fluidPage(fluidRow(
           column(3,align="center",div(style="font-size: 20px; color: white; font-family: Arial;", 
                                         tagList(HTML('<br>'),HTML('<br>'),fluidRow(tags$img(src = "tool.png",height = "20%", width = "50%",align = "center")),
                                                 fluidRow(HTML('<br><strong><font color="#27A3A0">Step 1: Download GeoSocial</font><strong>')),
                                                 HTML('<br>'),
-                                                fluidRow(buttonDownload(outputId='Report', label='Download',color = "#27A3A0",width='200px'))))),
+                                                fluidRow(buttonDownload(outputId='Report', label='Download',color = "#27A3A0",width='120px'))))),
           column(3,align="center",div(style="font-size: 20px; color: white; font-family: Arial;",
                                       tagList(HTML('<br>'),HTML('<br>'),fluidRow(tags$img(src = "doc.png",height = "10%", width = "40%",align = "center")),
                                               fluidRow(HTML('<strong><font color="#27A3A0">Step 2: Read "readme.pdf"</font><strong>')),
@@ -513,24 +511,25 @@ server = shinyServer(function(input, output, session) {
   output$parameters <- renderUI(
     tagList(HTML('<br><br><br><br>'),renderUI(fluidPage(
       shinydashboard::box(width = 1000,height = 1000,status = "success",solidHeader = T,
-          tagList(div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>What data would you like to integrate?</b> "))),HTML('<br><br><br>'),
+          tagList(HTML("<p style='text-align:left;'><b>  <font size='6'>What data would you like to integrate?</font> </b></p>"),HTML('<br><br><br>'),
                   fluidRow(column(6,
                                   fluidRow(column(4,pickerInput(inputId = "longitudinal",label = "Longitudinal Survey:", choices =  longitudinal_choices, options =pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Longitudinal survey",header = "Please select one" ,style = "btn-light"))),
                                            column(4,pickerInput(inputId = "long_waves",label = "Years/Waves:", choices = waves_choices, multiple=TRUE, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))),
                                            column(4,pickerInput(inputId = "long_topic",label = "Sub-major topic area:", choices = long_topic_choices, multiple=TRUE, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))))),
-                           column(6,boxg(color = '#dde6cd',id='subbox10',height= "200px",left='-3',right='-1',content=centerContentLinks(fluidPage(fluidRow( tags$h3('Survey data documentation',style='color: black;font-weight: bold;',style='color: black;font-weight: bold; text-decoration: underline;')),
-                                                                                                                                                   fluidRow( tags$a(href="https://www.lsay.edu.au/publications/search-for-lsay-publications/2547","• LSAY 2009 cohort User guide",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(href="https://www.lsay.edu.au/publications/search-for-lsay-publications/2621", "• LSAY Data Dictionary",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(href="https://www.lsay.edu.au/publications/search/y09-questionnaires-and-frequency-tables", "• LSAY 2009 Questionnaires and frequency tables",style='text-decoration: underline;'))))))),
-                  fluidRow(column(6,
+                           column(6,boxd(color = '#dde6cd',id='subbox10',height= "calc(27vh)",left='-3',right='-1',content=centerContentLinks(fluidPage(fluidRow( tags$h3('Survey data documentation',style='color: black;font-weight: bold;',style='color: black;font-weight: bold; text-decoration: underline;')),
+                                                                                                                                                   fluidRow( tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search-for-lsay-publications/2547","• LSAY 2009 cohort User guide",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search-for-lsay-publications/2621", "• LSAY Data Dictionary",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search/y09-questionnaires-and-frequency-tables", "• LSAY 2009 Questionnaires and frequency tables",style='text-decoration: underline;'))))))),
+                           fluidRow(column(12,HTML("<br>"))),
+                           fluidRow(column(6,
                                   fluidRow(column(4,pickerInput(inputId = "TSP",label = "DataPack", choices = TSP_choices, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))),
                                            column(4,pickerInput(inputId = "TSP_years",label = "Census", multiple=TRUE, choices = TSP_years_choices, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))),
                                            column(4,pickerInput(inputId = "TSP_variables",label = " Variables:", multiple=TRUE, choices = TSP_variables_choices, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))))),
-                           column(6,boxg(color = '#c9cee8',id='subbox11',height= "200px",left='-3',right='-1',content=centerContentLinks(fluidPage(fluidRow( tags$h3('Geospatial data documentation',style='color: black;font-weight: bold;text-decoration: underline;')),
-                                                                                                                                              fluidRow( tags$a(href="https://www.abs.gov.au/census/2021-census-data-release-plans/2021-census-product-release-guide#datapacks","• ABS Time series profile",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(href="https://www.abs.gov.au/census/guide-census-data/geography", "• Understanding Census geography",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/main-structure-and-greater-capital-city-statistical-areas/statistical-area-level-2", "• ASGS SA2 2021",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/correspondences", "• Correspondences",style='text-decoration: underline;'))))))))
+                           column(6,boxd(color = '#c9cee8',id='subbox11',height= "calc(27vh)",left='-3',right='-1',content=centerContentLinks(fluidPage(fluidRow( tags$h3('Geospatial data documentation',style='color: black;font-weight: bold;text-decoration: underline;')),
+                                                                                                                                              fluidRow( tags$a(target="_blank",href="https://www.abs.gov.au/census/2021-census-data-release-plans/2021-census-product-release-guide#datapacks","• ABS Time series profile",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.abs.gov.au/census/guide-census-data/geography", "• Understanding Census geography",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/main-structure-and-greater-capital-city-statistical-areas/statistical-area-level-2", "• ASGS SA2 2021",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/correspondences", "• Correspondences",style='text-decoration: underline;'))))))))
           ,HTML('<br><br><br><br>'),fluidRow(
             column(6,ButtonContent(buttonAction(outputId='Back_parameters', label='Back',color = "#759AAF"))),
             column(6,ButtonContent(buttonAction(outputId='Continue', label='Continue',color = "#759AAF")))))))))
