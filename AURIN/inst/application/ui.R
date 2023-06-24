@@ -11,7 +11,7 @@
 
 ui <- fluidPage(  tags$style(".nav { display:none; }"), 
 theme = shinytheme("sandstone"),navbarPage(id = "inTabset",
-  title = tags$img(src = "logo.png",height = 30, width = 130,align = "center"),   
+  title = tagList(tags$img(src = "logo_final.png",height = 30, width = 180,align = "left")),   
   position = c("fixed-top"),
   tabsetPanel(type = "tabs",
     tabPanel(tags$h5('Home'),value = "home",  uiOutput("home",align="center"), ),

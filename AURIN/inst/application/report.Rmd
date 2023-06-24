@@ -1,5 +1,5 @@
 ---
-title: "GeoSocial - cookbook"
+title: "GeoSocial - Readme"
 output: pdf_document
 params:
   msg0: NA
@@ -11,18 +11,12 @@ params:
 
 ---
 
-          
-```{r,echo=FALSE,purl=FALSE}
-# execute code if the date is later than a specified day
-do_it = Sys.Date() > '2018-02-14'
-```
-
-
+        
 ```{r eval=TRUE,echo=FALSE,purl=FALSE}
 #x = rnorm(100)
 #print(x)
 ```
-Thank you for using the GeoSocial solution. We created an R script to link data based on the previous questionary. This document thoroughly explains each code and stage of the data linkage process.
+Thank you for using GeoSocial solution. We have developed an R script to execute the data linkage. This document provides a detailed explanation of the script and explains how to execute it. You chose the following elements: 
 
 `r params$msg0`  
 
@@ -36,108 +30,129 @@ Thank you for using the GeoSocial solution. We created an R script to link data 
 
 `r params$msg5`
 
-The R script starts clean the environment, and install the Toolboox and the necessary dependencies. 
+
+
+
+
+The R script starts cleaning the environment and installs the GeoSocial library with the necessary dependencies.
 
 ```{r,eval=FALSE, comment=NA}
-#############################################################################################
-########################################    MAIN    #########################################
-#############################################################################################
-########### ----------- Clean all variables -------- #####
 rm(list=ls())
-
-#### ------- Install dependencies ------ ####
-path = getwd()
-#### ---- Inside the folder: ---- ###
-setwd(paste0(path,'/IRISS'))
-source('tools/install.R')
-
-#### ----- Compile documentation ---- ##
-devtools::document()
-devtools::build_manual()
-#### ----- Install the IRISS library ----- ####
-setwd(path)
-#### ----- After generate changes in the library we need to delete it and reinstall ---- ####
-remove.packages('IRISS')
-install.packages('IRISS',repos = NULL, type = 'source')
+##### ------ Install GeoSocial ----- #####
+install.packages('geosocial_1.0.tar.gz',repos = NULL, type = 'source',dependencies=TRUE)
 ```
 
-After the installation of the library, the code would load the library and the parameters file created based on the previous questionary. In addition, the code would created the necessary folders where outputs would be stored. 
+Once the library is installed, the code will load both the library and the parameters file created from the previous questionnaire. Furthermore, the code will generate the required folders where any outputs will be saved.
 ```{r,eval=FALSE, comment=NA}
-library(IRISS)
-########## ------- Load parameters --------- ###### 
-LoadParameters(file = "Parameters.json")
+##### ------ Load GeoSocial ----- #####
+library(geosocial)
+########## ------- Load parameters --------- ######
+LoadParameters(file = "parameters.json")
 ##### ------ Create folders ------ #####
 CreateFolders()
-# #### ------ Create log file ------ #####
-# logNm <- 'test.log'
-# GenerateLog(name = logNm)
 ```
-
-In addition, this part of the code run
-
+A log file is created to record each step of the linkage, flag any error or warning messages to assist with debugging and ensure transparency and reproducibility of the results. 
 ```{r,eval=FALSE, comment=NA}
-
-
-######### ---------- A vector with the path of each file ------- @@@@@@@@@@
+##### ------ Create log file ------ #####
+logNm <- 'test.log'
+GenerateLog(name = logNm)
+```
+The following chunk loads the parameters into the global environment.
+```{r,eval=FALSE, comment=NA}
+######### ---------- 0. Read parameters ------- ###########
 LSAY_cohort = ParsingParameter('LSAY_cohort')
 LSAY_waves = as.numeric(ParsingParameter('LSAY_waves'))
+LSAY_topics = ParsingParameter('LSAY_topics')
 SurveyFiles = ParsingParameter('SurveyFiles')
 TSP_year = ParsingParameter('TSP_year')
 TSP_variables = ParsingParameter('TSP_variables')
-
+```
+After defining the parameters, we proceed to load the longitudinal survey. 
+```{r,eval=FALSE, comment=NA}
 ####### -------------- 1. Loading data ----------- #########
 ###### -------- Load LSAY ------- ####
-LSAY_2009 = LoadLSAY(wave = LSAY_waves,cohort = LSAY_cohort)
+LSAY_2009 = LoadLSAY(wave = LSAY_waves,cohort =
+                       LSAY_cohort, LSAY_topics = LSAY_topics)
 ##### ---- Extract survey responses --- #####
 SurveyResponses = LSAY_2009[['SurveyResponses']]
 ##### ---- Exctract GeospatialResponses --- #####
 GeospatialResponses = LSAY_2009[['GeospatialResponses']]
-
+```
+Now we read the geographical data and the metadata, in this case, the Time series profile 2021.
+```{r,eval=FALSE, comment=NA}
 ### -------- Load TSP 2021  -------- #######
 TSP_2021 = LoadTSP2021(year=LSAY_waves,variables = TSP_variables)
 ### -------- Extract data ------ #####
 TSP_2021_data = TSP_2021[['data']]
 ### -------- Extract metada ------ #####
 TSP_2021_metadata = TSP_2021[['metadata']]
-
+```
+We start to prepare the longitudinal survey data for the data linkage. The first step is to transform the postcode to SA3. We store all the information about the linkage, to export at the end.
+```{r,eval=FALSE, comment=NA}
 ####### -------------- 2. Geospatial data linkage ----------- #########
 ####### ----------- 2.1 POAS TO SA3 ----------- ######
-SurveyResponses_SA3 = LSAY_POA_SA3(data=GeospatialResponses,concordances=concordances)
+SurveyResponses_SA3 = LSAY_POA_SA3(data=GeospatialResponses,
+                                   concordances=concordances)
 ###### --------- SA3 ------- ########
 SurveyResponses_SA3_IN = SurveyResponses_SA3[['sa3']]
 ###### --------- ABS Metric ------- ########
 SurveyResponses_SA3_metric = SurveyResponses_SA3[['metric']]
 ###### --------- ABS Concordances ------- ########
-SurveyResponses_SA3_concordances= as.data.frame(SurveyResponses_SA3[['concordances']])
+SurveyResponses_SA3_concordances = as.data.frame(SurveyResponses_SA3[['concordances']])
 ###### --------- ABS Ratio ------- ########
 SurveyResponses_SA3_ratio = as.data.frame(SurveyResponses_SA3[['ratio']])
-
+```
+After having all in terms of SA3, we need to transform all to SA3 2021 to link with TSP 2021. 
+```{r,eval=FALSE, comment=NA}
 ####### ----------- STAGE 2.2: SA3 TO SA3 year ----------- ######
-SurveyResponses_SA3_TSP = LSAY_PSA3_SA3(data=SurveyResponses_SA3_IN,concordances=concordances,year_out = TSP_year)
+SurveyResponses_SA3_TSP = LSAY_PSA3_SA3(data=SurveyResponses_SA3_IN,
+                                        concordances=concordances,
+                                        year_out = TSP_year)
 ###### --------- SA3 ------- ########
-SurveyResponses_SA3_TSP_OUT = SurveyResponses_SA3_TSP[['sa3']]
+SurveyResponses_SA3_TSP_OUT = 
+        SurveyResponses_SA3_TSP[['sa3']]
 ###### --------- ABS Metric ------- ########
-SurveyResponses_SA3_TSP_metric = SurveyResponses_SA3_TSP[['metric']]
+SurveyResponses_SA3_TSP_metric = 
+         SurveyResponses_SA3_TSP[['metric']]
 ###### --------- ABS Concordances ------- ########
-SurveyResponses_SA3_TSP_concordances = as.data.frame(SurveyResponses_SA3_TSP[['concordances']])
+SurveyResponses_SA3_TSP_concordances = 
+         as.data.frame(SurveyResponses_SA3_TSP[['concordances']])
 ###### --------- ABS Ratio ------- ########
-SurveyResponses_SA3_TSP_ratio = as.data.frame(SurveyResponses_SA3_TSP['ratio'])
-
+SurveyResponses_SA3_TSP_ratio = 
+         as.data.frame(SurveyResponses_SA3_TSP['ratio'])
+```
+After transforming the longitudinal survey in the same terms as the Time series profile, we performance the data linkage between the two datasets. 
+```{r,eval=FALSE, comment=NA}
 ####### ------- GeoSpatial join ------ #####
-DataJoined = GeoSpatialJoin(year=LSAY_waves,GeospatialResponses=SurveyResponses_SA3_TSP_OUT,SurveyResponses=SurveyResponses,TSP_data = TSP_2021_data,TSP_metadata = TSP_2021_metadata)
-
+DataJoined = GeoSpatialJoin(year=LSAY_waves,
+                            GeospatialResponses=SurveyResponses_SA3_TSP_OUT,
+                            SurveyResponses=SurveyResponses,
+                            TSP_data = TSP_2021_data,
+                            TSP_metadata = TSP_2021_metadata)
+```
+We calculated consolidated the metrics, and concordances used in the process and storage, and stored it in an xlsx file.
+```{r,eval=FALSE, comment=NA}
 ############ --------- Geospatial report --------- ############
 summaryResults = SummaryReport(concordances_POA= SurveyResponses_SA3_concordances,
                                concordances_SA3 = SurveyResponses_SA3_TSP_concordances,
                                metrics_POA = SurveyResponses_SA3_metric,
                                metrics_SA3 = SurveyResponses_SA3_TSP_metric)
 
-######## -------- Write the summary report --------- #######
-openxlsx::write.xlsx(x=summaryResults,file='outputs/Summary.xlsx')
 
+######## -------- Write the summary report --------- #######
+openxlsx::write.xlsx(x=summaryResults,
+                     file='outputs/Summary.xlsx')
+```
+Subsequently, we export the data in Stata, preserving the structure and metadata. 
+```{r,eval=FALSE, comment=NA}
 ####### ------- Write stata ------ #####
-WriteStata(DataJoined = DataJoined,SurveyResponses = SurveyResponses,output_path = '/Users/gonzalezge/Downloads/', year=LSAY_waves)
+WriteStata(path = 'outputs/', waves =LSAY_waves,
+           DataJoined = DataJoined,
+           SurveyResponses = SurveyResponses)
 
 ```
-
-
+Finally, we write a summary of the data linkage in the log, and storage the metrics. 
+```{r,eval=FALSE, comment=NA}
+####### -------- Write final log ------ #######
+SummaryLog(summaryResults = summaryResults)
+```

@@ -1,1 +1,13 @@
-{"withAPI":true,"dataverse":{"token":"","ADA_ID":"","name":""},"SurveyFiles":"","LSAY_cohort":2009,"TSP_year":[],"LSAY_waves":[],"TSP_variables":[]}
+{"with_API": false,
+  "dataverse": {
+    "token": "",
+    "ADA_ID": "doi:10.4225/87/6BW27V",
+    "name": "LSAY_2009"
+  },
+  "Survey_files": "data/",
+  "LSAY_cohort": 2009,
+  "TSP_year": 2021,
+  "LSAY_waves": [],
+  "LSAY_topics": [],
+  "TSP_variables": []
+}

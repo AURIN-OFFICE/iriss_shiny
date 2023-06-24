@@ -17,7 +17,7 @@ server = shinyServer(function(input, output, session) {
       # Copy the report file to a temporary directory before processing it, in
       # case we don't have write permissions to the current working dir (which
       # can happen when deployed).
-      file.copy("IRISS_1.0.tar.gz", file, overwrite = TRUE)
+      file.copy("geosocial_1.0.tar.gz", file, overwrite = TRUE)
       
     }
   )
@@ -28,7 +28,7 @@ server = shinyServer(function(input, output, session) {
       # Copy the report file to a temporary directory before processing it, in
       # case we don't have write permissions to the current working dir (which
       # can happen when deployed).
-      file.copy("IRISS_1.0.pdf", file, overwrite = TRUE)
+      file.copy("geosocial_1.0.pdf", file, overwrite = TRUE)
       
     }
   )
@@ -115,54 +115,60 @@ server = shinyServer(function(input, output, session) {
   
   output$home  = renderUI(fluidRow(div(style='width: 100%; height: 1000px; overflow: hidden; position: relative;',
                                            tagList(HTML('<br>'),HTML('<br>'),HTML('<br>'),HTML('<br>'),
-                                                   HTML("<p style='text-align:left;'><b>  <font size='6'>Welcome to the GeoSocial Service</font> </b></p>"),
-                                                   boxd(color = '#96B243',id='subbox15',height= "calc(33vh)",left='3',right='3',
-                                                        content=tagList(fluidRow(column(6,centerContent(tagList(fluidRow(tags$img(src = "people.png",height = "30%", width = "40%",align = "center")),
-                                                                                                                fluidRow(HTML('Longitudinal survey'))))),
-                                                                                 column(6,centerContent(tagList(fluidRow(tags$img(src = "intro1.png",height = "28%", width = "40%",align = "center")),
-                                                                                                                fluidRow(HTML('Geospatial data')))))),HTML('<br>'),
-                                                                        div(style="font-size: 16px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;",
-                                                                            HTML("<p style='text-align:center;'>The GeoSocial solution allows 
-                                                                            researchers to linkage Australia’s largest 
-                                                                                 longitudinal surveys with geospatial statistical data derived 
+                                                   fluidRow(column(6,boxd(color = '#96B243',id='subbox16',height= "calc(40vh)",left='3',right='3',
+                                                                                   content=tagList(fluidRow(div(style="font-size: 16px; padding-top: 3%; color: white; font-family: Arial;",HTML("<p style='text-align:center;'><b>IRISS project</b></p>"))),fluidRow(column(12,centerContent(tagList(fluidRow(tags$img(src = "logo4.png",height = "100%", width = "90%",align = "center")),
+                                                                                                                                           fluidRow(HTML('')))))),HTML('<br>'),
+                                                                                                   div(style="font-size: 16px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;",
+                                                                                                       HTML('<br>'),HTML("<p style='text-align:center;'>The Integrated Research Infrastructure for the Social Sciences (IRISS) project is addressing the fragmentation of the Australian social science research infrastructure, establishing a new foundation for the integration of data, analysis and platforms for social science research in Australia. </p>"))))),
+                                                            column(6,boxd(color = '#96B243',id='subbox15',height= "calc(40vh)",left='3',right='3',
+                                                                          content=tagList(fluidRow(div(style="font-size: 16px; padding-top: 3%; color: white; font-family: Arial;",HTML("<p style='text-align:center;'><b>GeoSocial</b></p>")))
+                                                                                          ,fluidRow(column(6,centerContent(tagList(fluidRow(tags$img(src = "people.png",height = "30%", width = "40%",align = "center")),
+                                                                                                                                  fluidRow(HTML('Longitudinal survey'))))),
+                                                                                                   column(6,centerContent(tagList(fluidRow(tags$img(src = "intro1.png",height = "28%", width = "40%",align = "center")),
+                                                                                                                                  fluidRow(HTML('Geospatial data')))))),HTML('<br>'),
+                                                                                          div(style="font-size: 16px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;",
+                                                                                              HTML("<p style='text-align:center;'>The GeoSocial solution allows 
+                                                                            researchers to linkage Australia’s largest longitudinal surveys with geospatial statistical data derived 
                                                                                  from the Australian Census of Population and Housing. GeoSocial will 
                                                                                  empower Australia's large cross-disciplinary social research community 
                                                                                  to identify patterns, make predictions, and inform social policy using 
-                                                                                 rich integrated GeoSocial data.</p>")))),HTML('<br>'),
+                                                                                 rich integrated GeoSocial data.</p>"))))
+                                                            )),HTML('<br>'),
                                                    div(boxd(color = '#45A0EF',id='subbox1s',height= "calc(40vh)",left='3',right='3',
-                                                        content=tagList(column(8,div(style="font-size: 16px; padding-top: 3%; color: white; font-family: Arial;",HTML("<p style='text-align:justify;'><b>How works?
-                                                                                </b> <br><br> To meet the standards, set by data custodians and ensure transparency, the Geosocial solution combines various capabilities and functions related to data linkage into a toolbox, which is available as an R library. By utilizing a configuration file, as well as the R library and a main script, the user can execute data linkage and enhancement tasks within their local environment. Is the responsibility of the user to:
-                                                                                <br> &#8203 &#8203 • Obtain permission to utilize the Longitudinal survey.
-                                                                                <br> &#8203 &#8203 • Set up a safe environment according to the data custodians' policy. 
-                                                                                <br> &#8203 &#8203 • <a href='https://cran.r-project.org'>Install R</a> and required dependencies. 
-                                                                                <br> <br>
-                                                                                GeoSocial does not collect or retain any personal data or information. Every aspect of GeoSocial is transparent and comes with detailed documentation. The following elements make up GeoSocial and are easily understood:
-                                                                                <br><b> &#8203 &#8203 • Toolbox:</b> R library that has everything needed to the data linkage.
-                                                                                <br><b> &#8203 &#8203 • Parameters:</b> File with all information for data linkage, including data location, API credentials, wave and cohort info, etc.
-                                                                                <br><b> &#8203 &#8203 • Script:</b> Executed the workflow and used the toolbox to read and merge the data based on user preferences
-                                                                                <br>The user will need to download all three components to the executed the linkage.</p>"))),
+                                                        content=tagList(fluidRow(column(12,div(style="font-size: 16px; padding-top: 3%; padding-left: 2%;padding-right: 2%; color: white; font-family: Arial;",HTML("<p style='text-align:justify;'><b>How data linkage works?
+                                                                                </b> <br><br> GeoSocial utilizes the geographical identifier from the longitudinal survey and converts it to a Statistical Areas Level 3 (SA3s) for linking with geospatial statistical data obtained from the Australian Census of Population and Housing. The Geosocial output retains the original format of the longitudinal survey, with the addition of geospatial variables as a new column.
+                                                                                It is the responsibility of the user to:
+                                                                                <br> &#8203 &#8203 • Request access to the Longitudinal Surveys of Australian Youth datasets.
+                                                                                <br> &#8203 &#8203 • Set up a safe environment according to the data custodians' policies.
+                                                                                <br> &#8203 &#8203 • <a href='https://cran.r-project.org'>Install R</a> and required dependencies")))),
+                                                                        fluidRow(column(9,div(style="font-size: 16px; padding-top: 1%; padding-left: 3%;padding-right: 2%; color: white; font-family: Arial;",HTML("<p style='text-align:justify;'>
+                                                                                The GeoSocial solution is composed of the following elements:
+                                                                                <br><b> &#8203 &#8203 • Toolbox:</b> R library that has all the R functions you need for data linkage.
+                                                                                <br><b> &#8203 &#8203 • Parameters:</b> File with all the relevant information for data linkage, including data locations, API credentials, wave and cohort information.
+                                                                                <br><b> &#8203 &#8203 • Script:</b> Used to execute the workflow which will use the toolbox to read and merge the data based on user preferences.
+                                                                                <br>GeoSocial does not collect or retain any personally identifying information.</p>"))),
                                                                                 column(3,align="center",div(style="font-size: 20px; color: white; font-family: Arial;",
-                                                                                  tagList(HTML('<br>'),HTML('<br>'),fluidRow(tags$img(src = "tool.png",height = "30%", width = "60%",align = "center")),
-                                                      fluidRow(HTML('GeoSocial')))))))),HTML('<br>'),
+                                                                                                            tagList(fluidRow(tags$img(src = "tool.png",height = "80px", width = "120px",align = "center")),
+                                                                                                                    fluidRow(HTML('GeoSocial'))))))))),HTML('<br>'),
                                                       fluidRow(column(2,''),column(8,''),column(2,align="center",ButtonContent(buttonAction(width = "100px",outputId='start_home', label='Start',color = "#F5822B"))))))))
                                                       
   
 
   output$users  = renderUI(fluidRow(div(style='width: 100%; height: 1000px; overflow: hidden; position: relative;',
-                                        tagList(HTML('<br>'),HTML("<p style='text-align:left;'><b>  <font size='6'>Welcome to the GeoSocial Service</font> </b></p>"),
+                                        tagList(HTML('<br><br><br><br><br>'),
                                                 fluidRow(column(6,boxd(color = '#96B243',id='s',height= "calc(70vh)",left='3',right='3',
                                                                        content=tagList(div(style="font-size: 20px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;",
                                                                                            HTML('<br>'),HTML("<p style='text-align:center;'><b>Guided data linkage</b></p>")),
                                                                                        tags$img(src = "data.png",height = "110px%", width = "120px",align = "center"),HTML('<br>'),HTML('<br>'),
-                                                                                       fluidRow(div(style="font-size: 18px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;", HTML("<p style='text-align:center;'>We have developed a pipeline that meets the needs of most users:"))),
-                                                                                       fluidRow(column(12,BulletsContent(HTML(markdown::renderMarkdown(text = "- Easy access to the data.\n- Certainty regarding data meanings. \n- Less room for analytic errors \n- Increased data usability and utility to untrained users.  \n"))))),
+                                                                                       fluidRow(div(style="font-size: 18px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;", HTML("<p style='text-align:center;'>We have developed a pipeline to guide you through the components involved in the linkage. The guided option provides:"))),
+                                                                                       fluidRow(column(12,BulletsContent(HTML(markdown::renderMarkdown(text = "- Easy access to the data.\n- Certainty regarding data meanings.\n- Less room for analytic errors.\n- Increased data usability and utility to untrained users. \n"))))),
                                                                                        ButtonContent(buttonAction(outputId='start_guided', label='Select',color = "#799d0d"))))),
                                                          column(6,boxd(color = '#ed8333',id='s',height= "calc(70vh)",left='3',right='3',
                                                                        content=tagList(div(style="font-size: 20px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;",
-                                                                                           HTML('<br>'),HTML("<p style='text-align:center;'><b>Advance linkage</b></p>")),
+                                                                                           HTML('<br>'),HTML("<p style='text-align:center;'><b>Self-guided data linkage</b></p>")),
                                                                                        tags$img(src = "coding.png",height = "120px%", width = "120px%",align = "center"),HTML('<br>'),HTML('<br>'),
-                                                                                       fluidRow(div(style="font-size: 18px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;", HTML("<p style='text-align:center;'>You have the ability to customize your own data pipeline and personalize the data linkage:"))),
-                                                                                       fluidRow(column(12,BulletsContent(HTML(markdown::renderMarkdown(text = "- Confident with using Python and/or R for data wrangling, integration, and analysis.\n- Good understanding of geospatial data.\n- Adding new datasets. \n- Supports other social science researchers"))))),
+                                                                                       fluidRow(div(style="font-size: 18px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;", HTML("<p style='text-align:center;'>We have allowed you to customise your data pipeline and personalize the data linkage. The self-guided option is suitable if you are:"))),
+                                                                                       fluidRow(column(12,BulletsContent(HTML(markdown::renderMarkdown(text = "- Confident with using Python and/or R for data wrangling, integration, and analysis.\n- Familiar with geospatial data.\n- Adding new datasets. \n- Supporting other social science researchers."))))),
                                                                                        ButtonContent(buttonAction(outputId='start_advance', label='Select',color = "#eb6601")))))),
                                                 HTML('<br>'),
                                                 fluidRow(column(2,ButtonContent(buttonAction(outputId='Back_home', label='Back',color = "#759AAF"))),column(6,''),column(2,''))))))
@@ -175,7 +181,7 @@ server = shinyServer(function(input, output, session) {
                         column(4,boxd(color = '#91ae3b',id='subbox1s',height= "calc(50vh)",left='-1',right='-3',content=centerContent(tagList(fluidRow(column(12,HTML("TOOLBOX"),HTML('<br>'))),
                             fluidRow(column(12,tags$img(src = "response.png",height = "30%", width = "30%",align = "center"))),HTML('<br><br>'),
                             fluidRow(div(style="padding-left: 8%;padding-right: 8%;font-family: Arial;",
-                                         HTML("<p style='text-align:center;'>R library with essential functions needed it to the data linkage. </p>"))),
+                                         HTML("<p style='text-align:center;'>R library with essential functions needed for data linkage. </p>"))),
                             HTML('<br>'),
                             div(style="padding-bottom: 50%;font-family: Arial;",fluidRow(column(12,buttonDownload(outputId = "toolbox",label = "Download",color = "#70930a")))),
                             )))),
@@ -183,7 +189,7 @@ server = shinyServer(function(input, output, session) {
                                       content=centerContent(tagList(fluidRow(column(12,HTML("DOCUMENTATION"),HTML('<br>'))),
                                 fluidRow(column(12,tags$img(src = "doc.png",height = "30%", width = "30%",align = "center"))),HTML('<br><br>'),
                                 fluidRow(div(style="padding-left: 8%; padding-right: 8%;font-family: Arial;",
-                                             HTML("<p style='text-align:center;'>Each function has a description, usage, arguments, and output.</p>"))),
+                                             HTML("<p style='text-align:center;'>Information about each function in the library including a description, arguments, and value.</p>"))),
                                 HTML('<br>'),
                                 fluidRow(column(12,buttonDownload(outputId = "manual",label = "Documentation",color = "#023c6e"))),
                                 )))),
@@ -191,7 +197,7 @@ server = shinyServer(function(input, output, session) {
                                       content=centerContent(tagList(fluidRow(column(12,HTML("PARAMETERS"),HTML('<br>'))),
                                 fluidRow(column(12,tags$img(src = "search.png",height = "35%", width = "30%",align = "center"))),HTML('<br><br>'),
                                 fluidRow(div(style="padding-left: 8%;padding-top:4%;  padding-right: 8%;font-family: Arial;",
-                                             HTML("<p style='text-align:center;'>File with all information for data linkage: survey, cohort etc.</p>"))),
+                                             HTML("<p style='text-align:center;'>File with the definitions that are relevant to the data linkage process: survey, cohort etc. </p>"))),
                                 HTML('<br>'),
                                 fluidRow(column(12,buttonDownload(outputId = "parameters_d",label = "Download",color = "#445d6c"))),
                                 )))))))),
@@ -199,7 +205,7 @@ server = shinyServer(function(input, output, session) {
                                                 content=centerContent(tagList(fluidRow(column(12,HTML("SCRIPT"),HTML('<br>'))),HTML('<br>'),
                                                                                 fluidRow(column(3,leftContent(tags$img(src = "personas.png",height = "50%", width = "50%",align = "center"))),
                                                                                          column(6,div(style="padding-left: 8%; padding-right: 8%;font-family: Arial;",
-                                                                                                      HTML("<p style='text-align:center;'>An example of the workflow which used the toolbox to read and merge the data based on user preferences.</p>")))),
+                                                                                                      HTML("<p style='text-align:center;'>A template of the workflow which uses the toolbox to read and merge the data based on user preferences.</p>")))),
                                                                               HTML('<br>'),fluidRow(column(12,buttonDownload(outputId = "script",label = "Download",color = "#ac8c21"))),
                                                                               HTML('<br><br>')))))),
                         HTML('<br><br>'),fluidRow(column(2,ButtonContent(buttonAction(outputId='Back_resources', label='Back',color = "#759AAF"))),column(6,''),column(2,''))))
@@ -270,7 +276,7 @@ server = shinyServer(function(input, output, session) {
     tagList(HTML('<br><br><br><br>'),renderUI(fluidPage(
       shinydashboard::box(width = 1000,height = 1000,status = "success",solidHeader = T,
                           tagList(HTML("<p style='text-align:left;'><b>  <font size='6'>Where would you like your integrated data stored?</font> </b></p>"),HTML('<br>'),
-                           HTML('The toolbox, allows the user to load the data linkage coming from the following sources:'),
+                           HTML('The toolbox allows the user to load the survey data from one of the following sources:'),
                            fluidRow(column(1,''),
                            column(5,fluidPage(fluidRow(tags$h3('Australian Data Archive')),
                                               fluidRow(HTML('<br>')),
@@ -295,7 +301,7 @@ server = shinyServer(function(input, output, session) {
   output$cloud <- renderUI(
     tagList(HTML('<br><br><br><br>'),renderUI(fluidPage(
       shinydashboard::box(width = 1000,height = 1000,status = "success",solidHeader = T,
-                          tagList(div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Where you would like you integrated data stored?</b> "))),HTML('<br><br><br>'),
+                          tagList(div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Where would you like your integrated data stored?</b> "))),HTML('<br><br><br>'),
                                   fluidRow(column(12,
                                                   renderUI(fluidPage(shinydashboard::box(title = HTML('<strong><font color="#759AAF">Australian Data Archive (ADA) API</font></strong>'),
                                                                                             tagList(HTML('Before generating an API token to use the ADA API, it is necessary to obtain approval to access the LSAY 2009 data through ADA.'),tags$a(target="_blank",href="https://dataverse.ada.edu.au/loginpage.xhtml?redirectPage=dataverse.xhtml", "Click here for information.",style='text-decoration: underline;'),HTML('After getting the approval, you can create a token. Please refer to the image below to locate it.')),width = 1000,height = 1000,status = "success",solidHeader = T,
@@ -308,7 +314,7 @@ server = shinyServer(function(input, output, session) {
                                                                                                                                      value = '',
                                                                                                                                      placeholder = "Please introduce your ADA token",debounce=0
                                                                                                                                    )),
-                                                                                                                         HTML('<strong><font color="#E5C34F">We do not collect or upload any information. The token is included in the parameters file that you executed on your computer.</font></strong>'))
+                                                                                                                         HTML('<strong><font color="#E5C34F">We do not collect or upload any information. The token is included in the parameters file that you execute on your computer. </font></strong>'))
                                                                                                      ,column(1,""),
                                                                                             fluidRow(column(6, HTML('<br>'))),
                                                                                             tagList(fluidRow(column(6,ButtonContent(buttonAction(outputId='back_ada', label='Back',color = "#759AAF"))),
@@ -319,21 +325,21 @@ server = shinyServer(function(input, output, session) {
   output$local <- renderUI(
     tagList(HTML('<br><br><br><br>'),renderUI(fluidPage(
       shinydashboard::box(width = 1000,height = 1000,status = "success",solidHeader = T,
-                          tagList(div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Where you would like you integrated data stored?</b> "))),HTML('<br><br><br>'),
+                          tagList(div(style="position:absolute; padding-left: 0.5%; color: '#434349'; font-family: Arial;",tags$h2(HTML("<b>Where would you like your integrated data stored?</b> "))),HTML('<br><br><br>'),
                                   fluidRow(column(12,
                                                   renderUI(fluidPage(shinydashboard::box(title = HTML('<strong><font color="#759AAF">Local environment</font></strong>'),
-                                                                                         tagList(HTML('In order to load the LSAY 2009, you need to indicate where it is located on your computer. Please indicate it in the designated field below.')),width = 1000,height = 1000,status = "success",solidHeader = T,
+                                                                                         tagList(HTML('In order to load the LSAY 2009 cohort, you need to indicate where it is located on your computer.')),width = 1000,height = 1000,status = "success",solidHeader = T,
                                                                                          HTML('<br><br>'),   
                                                                                          tagList(fluidRow(tags$img(src = "folder.png",height = 150, width = 150,align = "center")),
                                                                                                  HTML('<br>'),   
                                                                                                  fluidRow(column(1,""),column(10,tagList(
-                                                                                                   HTML('<strong><font color="#759AAF">Please indicates the folder where is located the LSAY 09 in Stata format:</font></strong><br><br>'),
+                                                                                                   HTML('<strong><font color="#759AAF">Please indicate the folder where the LSAY 2009 cohort in Stata format is located:</font></strong><br><br>'),
                                                                                                    aceEditor(
                                                                                                      outputId = "path_files",height = "50px",
                                                                                                      value = '',debounce=0,
-                                                                                                     placeholder = "Please introduce your absolute path. For example: C:\\Users\\example\\Documents\\LSA09"
+                                                                                                     placeholder = "Please introduce your absolute path. For example: C:\\Users\\example\\Documents\\LSA09\\"
                                                                                                  )),
-                                                                                                 HTML('<strong><font color="#E5C34F">We do not collect or upload any information. The absolute path is included in the parameters file that you executed on your computer.</font></strong>')
+                                                                                                 HTML('<strong><font color="#E5C34F">We do not collect or upload any information. The absolute path is included in the parameters file that you execute on your computer..</font></strong>')
                                                                                                  ),column(1,""),fluidRow(column(6, HTML('<br>'))), 
                                                                                                  tagList(fluidRow(column(6,ButtonContent(buttonAction(outputId='back_local', label='Back',color = "#759AAF"))),
                                                                                                                   column(6,ButtonContent(buttonAction(outputId='continue_local', label='Continue',color = "#759AAF"))))),
@@ -383,16 +389,16 @@ server = shinyServer(function(input, output, session) {
         
         path = getwd()
         
-        tempReportpdf <- file.path(tempdir(), "Cookbook.pdf")
+        tempReportpdf <- file.path(tempdir(), "readme.pdf")
         
         
         relativepath = tempdir()
         
-        file.copy("IRISS_1.0.tar.gz", relativepath, overwrite = TRUE)
-        file.copy("IRISS_1.0.pdf", relativepath, overwrite = TRUE)
+        file.copy("geosocial_1.0.tar.gz", relativepath, overwrite = TRUE)
+        file.copy("geosocial_1.0.pdf", relativepath, overwrite = TRUE)
         file.copy("main.R", relativepath, overwrite = TRUE)
 
-        write(CreateParameters(input$token_ada, input$path_files ,input$longitudinal, input$long_waves, input$long_topic, input$TSP, input$TSP_years, input$TSP_variables), paste0(relativepath,"/Parameters.json"))
+        write(CreateParameters(input$token_ada, input$path_files ,input$longitudinal, input$long_waves, input$long_topic, input$TSP, input$TSP_years, input$TSP_variables), paste0(relativepath,"/parameters.json"))
         
         
         rmarkdown::render(tempReport, output_file = tempReportpdf,output_format = 'pdf_document',
@@ -401,7 +407,7 @@ server = shinyServer(function(input, output, session) {
         )
         setwd(relativepath)
         
-        zip(zipfile = file, files = c("Cookbook.pdf","IRISS_1.0.tar.gz","IRISS_1.0.pdf","main.R",'Parameters.json'))
+        zip(zipfile = file, files = c("readme.pdf","geosocial_1.0.tar.gz","geosocial_1.0.pdf","main.R",'parameters.json'))
         setwd(path)
         
         
@@ -478,7 +484,7 @@ server = shinyServer(function(input, output, session) {
   output$success <- renderUI(
     tagList(HTML('<br><br><br><br>'),renderUI(fluidPage(
       shinydashboard::box(width = 1000,height = 1000,status = "success",solidHeader = T,
-          tagList(HTML("<p style='text-align:left;'><b>  <font size='6'>Thank you, we have generated all the necessary for the data linkage</font> </b></p>"),HTML('<br><br>'),
+          tagList(HTML("<p style='text-align:left;'><b>  <font size='6'>Thank you, we have generated all the necessary components for the data linkage</font> </b></p>"),HTML('<br><br>'),
           fluidRow(column(12,boxd(color = '#dde6cd',id='subbox5',height= "calc(50vh)",left='-1',right='-1',
           content=tagList(HTML('<br><br><br>'),fluidPage(fluidRow(
           column(3,align="center",div(style="font-size: 20px; color: white; font-family: Arial;", 
@@ -517,19 +523,20 @@ server = shinyServer(function(input, output, session) {
                                            column(4,pickerInput(inputId = "long_waves",label = "Years/Waves:", choices = waves_choices, multiple=TRUE, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))),
                                            column(4,pickerInput(inputId = "long_topic",label = "Sub-major topic area:", choices = long_topic_choices, multiple=TRUE, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))))),
                            column(6,boxd(color = '#dde6cd',id='subbox10',height= "calc(27vh)",left='-3',right='-1',content=centerContentLinks(fluidPage(fluidRow( tags$h3('Survey data documentation',style='color: black;font-weight: bold;',style='color: black;font-weight: bold; text-decoration: underline;')),
-                                                                                                                                                   fluidRow( tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search-for-lsay-publications/2547","• LSAY 2009 cohort User guide",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search-for-lsay-publications/2621", "• LSAY Data Dictionary",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search/y09-questionnaires-and-frequency-tables", "• LSAY 2009 Questionnaires and frequency tables",style='text-decoration: underline;'))))))),
+                                                                                                                                              fluidRow( tags$a(target="_blank",href="https://www.lsay.edu.au/data/access","• How to access LSAY data",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow( tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search-for-lsay-publications/2547","• LSAY 2009 cohort user guide",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search-for-lsay-publications/2621", "• LSAY variable listing and metadata",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.lsay.edu.au/publications/search/y09-questionnaires-and-frequency-tables", "• LSAY 2009 cohort questionnaires and frequency tables",style='text-decoration: underline;'))))))),
                            fluidRow(column(12,HTML("<br>"))),
                            fluidRow(column(6,
                                   fluidRow(column(4,pickerInput(inputId = "TSP",label = "DataPack", choices = TSP_choices, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))),
                                            column(4,pickerInput(inputId = "TSP_years",label = "Census", multiple=TRUE, choices = TSP_years_choices, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))),
                                            column(4,pickerInput(inputId = "TSP_variables",label = " Variables:", multiple=TRUE, choices = TSP_variables_choices, options = pickerOptions(actionsBox = TRUE,liveSearch=TRUE,showTick=TRUE,virtualScroll=TRUE,tickIcon='glyphicon glyphicon-ok',title = "Select more than one",header = "Years of the merge" ,style = "btn-light"))))),
                            column(6,boxd(color = '#c9cee8',id='subbox11',height= "calc(27vh)",left='-3',right='-1',content=centerContentLinks(fluidPage(fluidRow( tags$h3('Geospatial data documentation',style='color: black;font-weight: bold;text-decoration: underline;')),
-                                                                                                                                              fluidRow( tags$a(target="_blank",href="https://www.abs.gov.au/census/2021-census-data-release-plans/2021-census-product-release-guide#datapacks","• ABS Time series profile",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow( tags$a(target="_blank",href="https://www.abs.gov.au/census/2021-census-data-release-plans/2021-census-product-release-guide#datapacks","• ABS DataPacks",style='text-decoration: underline;')),
                                                                                                                                               fluidRow(tags$a(target="_blank",href="https://www.abs.gov.au/census/guide-census-data/geography", "• Understanding Census geography",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/main-structure-and-greater-capital-city-statistical-areas/statistical-area-level-2", "• ASGS SA2 2021",style='text-decoration: underline;')),
-                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/correspondences", "• Correspondences",style='text-decoration: underline;'))))))))
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/main-structure-and-greater-capital-city-statistical-areas/statistical-area-level-3", "• ASGS SA3s",style='text-decoration: underline;')),
+                                                                                                                                              fluidRow(tags$a(target="_blank",href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/correspondences", "• Geographic correspondences",style='text-decoration: underline;'))))))))
           ,HTML('<br><br><br><br>'),fluidRow(
             column(6,ButtonContent(buttonAction(outputId='Back_parameters', label='Back',color = "#759AAF"))),
             column(6,ButtonContent(buttonAction(outputId='Continue', label='Continue',color = "#759AAF")))))))))
