@@ -128,7 +128,7 @@ server = shinyServer(function(input, output, session) {
                                                                                                                                   fluidRow(HTML('Geospatial data')))))),HTML('<br>'),
                                                                                           div(style="font-size: 16px; padding-left: 5%; padding-right: 5%;color: white; font-family: Arial; overflow-y:hidden;",
                                                                                               HTML("<p style='text-align:center;'>The GeoSocial solution allows 
-                                                                            researchers to linkage Australia’s largest longitudinal surveys with geospatial statistical data derived 
+                                                                            researchers to link Australia’s largest longitudinal surveys with geospatial statistical data derived 
                                                                                  from the Australian Census of Population and Housing. GeoSocial will 
                                                                                  empower Australia's large cross-disciplinary social research community 
                                                                                  to identify patterns, make predictions, and inform social policy using 
