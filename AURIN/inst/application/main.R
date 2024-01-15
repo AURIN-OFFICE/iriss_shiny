@@ -33,7 +33,7 @@ SurveyResponses = LSAY_2009[['SurveyResponses']]
 GeospatialResponses = LSAY_2009[['GeospatialResponses']]
 
 ### -------- Load TSP 2021  -------- #######
-TSP_2021 = LoadTSP2021(year=LSAY_waves,variables = TSP_variables)
+TSP_2021 = LoadTSP2021(year=TSP_year,variables = TSP_variables)
 ### -------- Extract data ------ #####
 TSP_2021_data = TSP_2021[['data']]
 ### -------- Extract metada ------ #####
@@ -53,10 +53,10 @@ SurveyResponses_SA3_concordances = as.data.frame(SurveyResponses_SA3[['concordan
 ###### --------- ABS Ratio ------- ########
 SurveyResponses_SA3_ratio = as.data.frame(SurveyResponses_SA3[['ratio']])
 
-####### ----------- STAGE 2.2: SA3 TO SA3 year ----------- ######
+####### ----------- STAGE 2.2: SA3 TO SA3 2021 ----------- ######
 SurveyResponses_SA3_TSP = LSAY_PSA3_SA3(data=SurveyResponses_SA3_IN,
                                         concordances=concordances,
-                                        year_out = TSP_year)
+                                        year_out = 2021)
 ###### --------- SA3 ------- ########
 SurveyResponses_SA3_TSP_OUT = SurveyResponses_SA3_TSP[['sa3']]
 ###### --------- ABS Metric ------- ########
