@@ -2,8 +2,10 @@
 # ########################################    MAIN    #########################################
 # #############################################################################################
 rm(list=ls())
+
 ##### ------ Install GeoSocial ----- #####
 install.packages('geosocial_1.0.tar.gz',repos = NULL, type = 'source',dependencies=TRUE)
+remove.packages("geosocial")
 
 ##### ------ Load GeoSocial ----- #####
 library(geosocial)
@@ -12,8 +14,8 @@ LoadParameters(file = "parameters.json")
 ##### ------ Create folders ------ #####
 CreateFolders()
 ##### ------ Create log file ------ #####
-logNm <- 'test.log'
-GenerateLog(name = logNm)
+# logNm <- 'test.log'
+# GenerateLog(name = logNm)
 
 ######### ---------- 0. Read parameters ------- ###########
 LSAY_cohort = ParsingParameter('LSAY_cohort')
@@ -25,8 +27,10 @@ TSP_variables = ParsingParameter('TSP_variables')
 
 ####### -------------- 1. Loading data ----------- #########
 ###### -------- Load LSAY ------- ####
-LSAY_2009 = LoadLSAY(wave = LSAY_waves,cohort =
-                       LSAY_cohort, LSAY_topics = LSAY_topics)
+LSAY_2009 = LoadLSAY(wave = NULL,cohort =
+                       LSAY_cohort,LSAY_topics = NULL)
+
+
 ##### ---- Extract survey responses --- #####
 SurveyResponses = LSAY_2009[['SurveyResponses']]
 ##### ---- Exctract GeospatialResponses --- #####
